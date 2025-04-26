@@ -1,0 +1,293 @@
+openapi: 3.0.2
+info:
+  title: Microservicio de Products
+  version: v1
+paths:
+  '/products/{storeId}':
+    parameters:
+      - $ref: '#/components/parameters/storeId'
+    get:
+      summary: Get a list of products by StoreId
+      operationId: getProductsByStoreId
+      responses:
+        '200':
+          $ref: '#/components/responses/ListProducts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+  '/categories/{storeId}':
+    parameters:
+      - $ref: '#/components/parameters/storeId'
+    get:
+      summary: Get a list of categories by StoreId
+      operationId: getCategoriesByStoreId
+      responses:
+        '200':
+          $ref: '#/components/responses/ListCategories'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+components:
+  parameters:
+    productId:
+      name: productId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/productId'
+    categoryId:
+      name: categoryId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/categoryId'
+    storeId:
+      name: storeId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/storeId'
+  responses:
+    ListProducts:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProductDTO'
+    ListCategories:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/CategoryDTO'
+    Product:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductDTO'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Problem'
+          example:
+            '400':
+              value:
+                type: 'https://api.example.com/problems/validation-error'
+                status: 400
+                title: Validation Error
+                detail: >-
+                  One or more fields are invalid. See details for more information.
+                instance: 'https://api.example.com/problems/validation-error/12345'
+    Unauthorized:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Problem'
+          example:
+            '400':
+              value:
+                type: 'https://api.example.com/problems/validation-error'
+                status: 401
+                title: Validation Error
+                detail: >-
+                  One or more fields are invalid. See details for more information.
+                instance: 'https://api.example.com/problems/validation-error/12345'
+    Forbidden:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Problem'
+          example:
+            '400':
+              value:
+                type: 'https://api.example.com/problems/validation-error'
+                status: 403
+                title: Validation Error
+                detail: >-
+                  One or more fields are invalid. See details for more information.
+                instance: 'https://api.example.com/problems/validation-error/12345'
+    NotFound:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Problem'
+          example:
+            '400':
+              value:
+                type: 'https://api.example.com/problems/validation-error'
+                status: 404
+                title: Validation Error
+                detail: >-
+                  One or more fields are invalid. See details for more information.
+                instance: 'https://api.example.com/problems/validation-error/12345'
+    UnexpectedError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Problem'
+          example:
+            '400':
+              value:
+                type: 'https://api.example.com/problems/validation-error'
+                status: 404
+                title: Validation Error
+                detail: >-
+                  One or more fields are invalid. See details for more information.
+                instance: 'https://api.example.com/problems/validation-error/12345'
+  schemas:
+    StoreDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        name:
+          type: string
+          example: New York Store
+        address:
+          $ref: '#/components/schemas/AddressDTO'
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+    CategoryDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        categoryName:
+          type: string
+          example: "Drinks"
+        storeId:
+          type: integer
+          format: int64
+          example: 12345
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+    ProductDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 12345
+        productName:
+          type: string
+          example: "Cafe Latte"
+        price:
+          type: string
+          format: number
+          example: "4.99"
+        categoryId:
+          type: integer
+          format: int64
+          example: 12345
+        storeId:
+          type: integer
+          format: int64
+          example: 12345
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2023-10-01T12:34:56Z"
+    AddressDTO:
+      type: object
+      properties:
+        street:
+          type: string
+          example: "123 Main St"
+        city:
+          type: string
+          example: "New York"
+        country:
+          type: string
+          example: "USA"
+    Problem:
+      type: object
+      properties:
+        error:
+          type: string
+    productId:
+      title: productId
+      description: productId
+      type: integer
+      format: int64
+      minimum: 1
+      maximum: 999999999999
+      example: 1
+    categoryId:
+      title: example
+      description: example
+      type: integer
+      format: int64
+      minimum: 1
+      maximum: 999999999999
+      example: 1
+    storeId:
+      title: storeId
+      description: storeId
+      type: integer
+      format: int64
+      minimum: 1
+      maximum: 999999999999
+      example: 1
+    saleId:
+      title: sateId
+      description: sateId
+      type: integer
+      format: int64
+      minimum: 1
+      maximum: 999999999999
+      example: 1
