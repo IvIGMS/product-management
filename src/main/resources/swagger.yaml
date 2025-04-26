@@ -3,6 +3,48 @@ info:
   title: Microservicio de Products
   version: v1
 paths:
+  '/stores/{storeId}':
+    parameters:
+      - $ref: '#/components/parameters/storeId'
+    delete:
+      summary: Delete a store by id.
+      operationId: deleteStoreById
+      responses:
+        '204':
+          description: Store created successfully, no content returned.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+  /stores:
+    post:
+      summary: Create a Store
+      operationId: createStore
+      requestBody:
+        $ref: '#/components/requestBodies/StoreRequestDTO'
+      responses:
+        '201':
+          description: Store created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
   '/products/{storeId}':
     parameters:
       - $ref: '#/components/parameters/storeId'
@@ -12,6 +54,28 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/ListProducts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
+    post:
+      summary: Create a product to current Store
+      operationId: createProduct
+      requestBody:
+        $ref: '#/components/requestBodies/ProductRequestDTO'
+      responses:
+        '201':
+          description: Store created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDTO'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -41,7 +105,51 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/UnexpectedError'
+    post:
+      summary: Create a category
+      operationId: createCategory
+      requestBody:
+        $ref: '#/components/requestBodies/CategoryRequestDTO'
+      responses:
+        '201':
+          description: Category created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
 components:
+  requestBodies:
+    StoreRequestDTO:
+      description: Create a new store
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StoreRequestDTO'
+    ProductRequestDTO:
+      description: Create a new product
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProductRequestDTO'
+    CategoryRequestDTO:
+      description: Create a new category
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CategoryRequestDTO'
   parameters:
     productId:
       name: productId
@@ -84,6 +192,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ProductDTO'
+    Category:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CategoryDTO'
     BadRequest:
       description: Bad Request
       content:
@@ -170,6 +284,41 @@ components:
                   One or more fields are invalid. See details for more information.
                 instance: 'https://api.example.com/problems/validation-error/12345'
   schemas:
+    CategoryRequestDTO:
+      type: object
+      properties:
+        categoryName:
+          type: string
+          example: "Drinks"
+        storeId:
+          type: integer
+          format: int64
+          example: 12345
+    ProductRequestDTO:
+      type: object
+      properties:
+        productName:
+          type: string
+          example: "Cafe Latte"
+        price:
+          type: string
+          format: number
+          example: "4.99"
+        categoryId:
+          type: integer
+          format: int64
+          example: 12345
+        storeId:
+          type: integer
+          format: int64
+    StoreRequestDTO:
+      type: object
+      properties:
+        name:
+          type: string
+          example: New York Store
+        address:
+          $ref: '#/components/schemas/AddressDTO'
     StoreDTO:
       type: object
       properties:

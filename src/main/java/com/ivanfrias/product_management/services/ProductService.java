@@ -2,9 +2,8 @@ package com.ivanfrias.product_management.services;
 
 import com.ivanfrias.product_management.adapters.ProductAdapter;
 import com.ivanfrias.product_management.adapters.StoreAdapter;
-import com.ivanfrias.products.model.CategoryDTO;
-import com.ivanfrias.products.model.CategoryRequestDTO;
 import com.ivanfrias.products.model.ProductDTO;
+import com.ivanfrias.products.model.ProductRequestDTO;
 import com.ivanfrias.products.model.StoreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,19 +12,19 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService {
+public class ProductService {
 
     private final StoreAdapter storeAdapter;
     private final ProductAdapter productAdapter;
 
-    public List<CategoryDTO> getCategoryByStoreId(Long storeId) {
+    public List<ProductDTO> getProductsByStoreId(Long storeId) {
         StoreDTO storeDTO = storeAdapter.getStoreById(storeId);
-        return productAdapter.getCategoriesById(storeDTO.getId());
+        return productAdapter.getProductsByStoreId(storeDTO.getId());
     }
 
-    public CategoryDTO createCategory(Long storeId, CategoryRequestDTO categoryRequestDTO) {
+    public ProductDTO createProduct(Long storeId, ProductRequestDTO productRequestDTO) {
         StoreDTO storeDTO = storeAdapter.getStoreById(storeId);
-        categoryRequestDTO.setStoreId(storeDTO.getId());
-        return productAdapter.createCategory(categoryRequestDTO);
+        productRequestDTO.setStoreId(storeDTO.getId());
+        return productAdapter.createProduct(productRequestDTO);
     }
 }
