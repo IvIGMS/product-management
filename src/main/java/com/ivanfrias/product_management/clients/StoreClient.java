@@ -1,5 +1,6 @@
 package com.ivanfrias.product_management.clients;
 
+import com.ivanfrias.product_management.security.FeignClientConfig;
 import com.ivanfrias.products.model.StoreDTO;
 import com.ivanfrias.products.model.StoreRequestDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "Stores", url = "http://localhost:8081")
+@FeignClient(name = "Stores", url = "http://localhost:8081", configuration = FeignClientConfig.class)
 public interface StoreClient {
 
     @GetMapping("/api/v1/stores/{storeId}")

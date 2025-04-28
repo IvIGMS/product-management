@@ -1,9 +1,14 @@
 spring:
   application:
     name: product-management
+
 server:
   port: 8084
 
+application:
+  security:
+    jwt:
+      secret-key: "unasecretamuylargaunasecretamuylargaunasecretamuylarga1234"
 
 ## Feign Clients
 #stores:

@@ -1,5 +1,6 @@
 package com.ivanfrias.product_management.clients;
 
+import com.ivanfrias.product_management.security.FeignClientConfig;
 import com.ivanfrias.products.model.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "Products", url = "http://localhost:8083")
+@FeignClient(name = "Products", url = "http://localhost:8083", configuration = FeignClientConfig.class)
 public interface ProductClient {
 
     @GetMapping("/api/v1/products/{storeId}/stores")
