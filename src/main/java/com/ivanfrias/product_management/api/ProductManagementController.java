@@ -1,5 +1,8 @@
 package com.ivanfrias.product_management.api;
 
+import io.jsonwebtoken.Claims;
+
+import com.ivanfrias.product_management.api.utils.ControllerUtils;
 import com.ivanfrias.product_management.security.JwtService;
 import com.ivanfrias.product_management.services.ProductService;
 import com.ivanfrias.products.api.ProductsApi;
@@ -14,14 +17,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ProductManagementController implements ProductsApi {
+public class ProductManagementController extends ControllerUtils implements ProductsApi {
     private final ProductService productService;
     private final HttpServletRequest request;
-    private final JwtService jwtService;
 
     @Override
     public ResponseEntity<List<ProductDTO>> getProductsByStoreId(Long storeId) {
-        String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = getToken();
+        Claims claims = getAllClaims();
         return ResponseEntity.ok(productService.getProductsByStoreId(storeId));
     }
 
