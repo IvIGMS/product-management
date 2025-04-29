@@ -45,9 +45,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/UnexpectedError'
-  '/products/{storeId}':
-    parameters:
-      - $ref: '#/components/parameters/storeId'
+  /products:
     get:
       summary: Get a list of products by StoreId
       operationId: getProductsByStoreId
@@ -86,9 +84,7 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/UnexpectedError'
-  '/categories/{storeId}':
-    parameters:
-      - $ref: '#/components/parameters/storeId'
+  /categories:
     get:
       summary: Get a list of categories by StoreId
       operationId: getCategoriesByStoreId
@@ -293,7 +289,6 @@ components:
         storeId:
           type: integer
           format: int64
-          example: 12345
     ProductRequestDTO:
       type: object
       properties:

@@ -22,14 +22,16 @@ public class ProductManagementController extends ControllerUtils implements Prod
     private final HttpServletRequest request;
 
     @Override
-    public ResponseEntity<List<ProductDTO>> getProductsByStoreId(Long storeId) {
-        String authorizationHeader = getToken();
+    public ResponseEntity<List<ProductDTO>> getProductsByStoreId() {
         Claims claims = getAllClaims();
+        Long storeId = ((Integer) claims.get("storeId")).longValue();
         return ResponseEntity.ok(productService.getProductsByStoreId(storeId));
     }
 
     @Override
-    public ResponseEntity<ProductDTO> createProduct(Long storeId, ProductRequestDTO productRequestDTO) {
+    public ResponseEntity<ProductDTO> createProduct(ProductRequestDTO productRequestDTO) {
+        Claims claims = getAllClaims();
+        Long storeId = ((Integer) claims.get("storeId")).longValue();
         return ResponseEntity.created(null).body(productService.createProduct(storeId, productRequestDTO));
     }
 }
