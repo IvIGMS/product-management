@@ -3,7 +3,6 @@ package com.ivanfrias.product_management.api;
 import io.jsonwebtoken.Claims;
 
 import com.ivanfrias.product_management.api.utils.ControllerUtils;
-import com.ivanfrias.product_management.security.JwtService;
 import com.ivanfrias.product_management.services.ProductService;
 import com.ivanfrias.products.api.ProductsApi;
 import com.ivanfrias.products.model.ProductDTO;

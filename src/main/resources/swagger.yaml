@@ -22,7 +22,39 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/UnexpectedError'
+    get:
+      summary: Get a store by id.
+      operationId: getStoreById
+      responses:
+        '200':
+          $ref: '#/components/responses/Store'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
   /stores:
+    get:
+      summary: Get all stores
+      operationId: getStores
+      responses:
+        '200':
+          $ref: '#/components/responses/ListStores'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/UnexpectedError'
     post:
       summary: Create a Store
       operationId: createStore
@@ -166,6 +198,20 @@ components:
       schema:
         $ref: '#/components/schemas/storeId'
   responses:
+    ListStores:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/StoreDTO'
+    Store:
+      description: OK.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/StoreDTO'
     ListProducts:
       description: OK.
       content:

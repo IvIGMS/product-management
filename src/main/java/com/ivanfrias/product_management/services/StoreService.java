@@ -23,4 +23,13 @@ public class StoreService {
     public void deleteStoreById(Long storeId) {
         storeAdapter.deleteStoreById(storeId);
     }
+
+    public StoreDTO getStoreById(Long storeId) {
+        return storeAdapter.getStoreById(storeId);
+    }
+
+    public List<StoreDTO> getStores() {
+        return storeAdapter.getStores();
+    }
 }
+

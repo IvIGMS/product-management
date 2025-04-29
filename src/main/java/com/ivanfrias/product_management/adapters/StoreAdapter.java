@@ -9,10 +9,20 @@ import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class StoreAdapter {
     private final StoreClient storeClient;
+
+    public List<StoreDTO> getStores(){
+        try {
+            return storeClient.getStores().getBody();
+        } catch (FeignException.FeignClientException e){
+            throw new NotFoundException(e.getMessage());
+        }
+    }
 
     public StoreDTO getStoreById(Long storeId){
         try {
