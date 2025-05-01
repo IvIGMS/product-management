@@ -22,26 +22,34 @@ public class StoreManagementController extends ControllerUtils implements Stores
 
     @Override
     public ResponseEntity<StoreDTO> createStore(StoreRequestDTO storeRequestDTO) {
-        checkIsAdmin();
+        if(!checkIsAdmin()){
+            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
+        }
         return ResponseEntity.created(null).body(storeService.createStore(storeRequestDTO));
     }
 
     @Override
     public ResponseEntity<Void> deleteStoreById(Long storeId) {
-        checkIsAdmin();
+        if(!checkIsAdmin()){
+            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
+        }
         storeService.deleteStoreById(storeId);
         return ResponseEntity.noContent().build();
     }
 
     @Override
     public ResponseEntity<StoreDTO> getStoreById(Long storeId) {
-        checkIsAdmin();
+        if(!checkIsAdmin()){
+            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
+        }
         return ResponseEntity.ok(storeService.getStoreById(storeId));
     }
 
     @Override
     public ResponseEntity<List<StoreDTO>> getStores() {
-        checkIsAdmin();
+        if(!checkIsAdmin()){
+            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
+        }
         return ResponseEntity.ok(storeService.getStores());
     }
 }

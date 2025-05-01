@@ -32,15 +32,11 @@ public abstract class ControllerUtils {
         return (String) jwtService.extractAllClaims(getToken()).get("role");
     }
 
-    protected void checkIsAdmin() {
-        if(!ControllerUtilsConstants.ADMIN_ROLE.equals(getRole())) {
-            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
-        }
+    protected boolean checkIsAdmin() {
+        return ControllerUtilsConstants.ADMIN_ROLE.equals(getRole());
     }
 
-    protected void checkIsManager() {
-        if(!ControllerUtilsConstants.MANAGER_ROLE.equals(getRole())) {
-            throw new UnauthorizedException(STRING_NO_PREMISSIONS);
-        }
+    protected boolean checkIsManager() {
+        return ControllerUtilsConstants.MANAGER_ROLE.equals(getRole());
     }
 }
